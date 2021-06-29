@@ -1,16 +1,27 @@
 import { Subject } from "rxjs";
-let id = 0;
-var subject = new Subject();;
-let repeat = setInterval(() => {
-  id++;
-  console.log(`Item ${id}`);
-  subject.next(`Item ${id}`);
-  if (id > 9) {
-    subject.complete();
-    clearInterval(repeat);
+let id1 = 0;
+let id2 = 0;
+var subject1 = new Subject();
+var subject2 = new Subject();
+let repeat1 = setInterval(() => {
+  id1++;
+  console.log(`Item ${id1}`);
+  subject1.next(`Item ${id1}`);
+  if (id1 > 9) {
+    subject1.complete();
+    clearInterval(repeat1);
   }
 }, 1000);
-let subscription1 = subject.subscribe(
+let repeat2 = setInterval(() => {
+  id2++;
+  console.log(`Item ${id2}`);
+  subject2.next(`Item ${id2}`);
+  if (id2 > 5) {
+    subject2.complete();
+    clearInterval(repeat2);
+  }
+}, 2000);
+let subscription1 = subject1.subscribe(
   (x: any) => {
     console.log("subscription1", x, 1);
     logItem(x, 1);
@@ -18,7 +29,7 @@ let subscription1 = subject.subscribe(
   (error: any) => logItem("Error: " + error, 1),
   () => logItem("Completed", 1)
 );
-let subscription2 = subject.subscribe(
+let subscription2 = subject2.subscribe(
   (x: any) => {
     console.log("subscription2", x, 2);
     logItem(x, 2);
